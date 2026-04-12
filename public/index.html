@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Pizza Store</title>
+  <link rel="stylesheet" href="styles.css"/>
+  <script src="https://js.stripe.com/v3/"></script>
+</head>
+<body>
+
+  <header class="header-row">
+    <div class="header-left">
+      <h1>🍕 Pizza Store</h1>
+    </div>
+
+    <div class="header-right">
+      <div class="hamburger-wrap">
+        <button id="hamburger-btn" class="hamburger-btn" aria-label="Menu">☰</button>
+        <div id="hamburger-menu" class="hamburger-menu">
+          <div id="menu-user-info" class="menu-user-info">Not logged in</div>
+          <button class="menu-item" id="menu-profile">User Profile</button>
+          <button class="menu-item" id="menu-address">Manage Address</button>
+          <button class="menu-item" id="menu-orders">View Order History</button>
+          <button class="menu-item" id="menu-logout">Logout</button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- LOGIN -->
+  <section id="login-section" class="panel active">
+    <h2>Login</h2>
+    <form id="login-form">
+      <label>Email</label>
+      <input type="email" id="login-email" required />
+
+      <label>Password</label>
+      <input type="password" id="login-password" required />
+
+      <button id="go-login" type="submit">Login</button>
+    </form>
+
+    <p class="hint">New user? Register below.</p>
+    <button id="go-register">Go to Register</button>
+  </section>
+
+  <!-- REGISTER -->
+  <section id="register-section" class="panel">
+    <h2>Register</h2>
+    <form id="register-form">
+      <input type="text" id="reg-name" placeholder="Name" required />
+      <input type="email" id="reg-email" placeholder="Email" required />
+      <input type="password" id="reg-password" placeholder="Password" required />
+
+      <h3>Address</h3>
+      <input type="text" id="reg-line1" placeholder="Address" required />
+      <input type="text" id="reg-city" placeholder="City" required />
+      <input type="text" id="reg-state" placeholder="State" required />
+      <input type="text" id="reg-pin" placeholder="PIN Code" required />
+
+      <button type="submit">Register</button>
+    </form>
+
+    <button id="back-login">Back to Login</button>
+    <p id="register-status"></p>
+  </section>
+
+  <!-- MENU -->
+  <section id="menu-section" class="panel">
+    <h2>Menu</h2>
+    <input type="text" id="menu-search" placeholder="Search pizzas..." />
+
+    <div id="menu-list"></div>
+
+    <h3>Your Cart</h3>
+    <ul id="cart-list"></ul>
+    <p>Total: ₹<span id="total-amount">0.00</span></p>
+    <button id="clear-cart-btn">Clear Cart</button>
+    <button id="to-checkout" disabled>Proceed to Checkout</button>
+  </section>
+
+  <!-- CHECKOUT -->
+  <section id="checkout-section" class="panel">
+    <h2>Checkout Screen</h2>
+
+    <div id="checkout-summary"></div>
+
+    <h3>Payment Details</h3>
+    <div id="card-element"></div>
+    <button id="pay-now">Pay Now</button>
+    <p id="payment-status"></p>
+
+    <button id="back-menu">Back</button>
+  </section>
+
+  <!-- STATUS -->
+  <section id="status-section" class="panel">
+    <h2>Order Status</h2>
+
+    <p>Order ID: <span id="status-order-id"></span></p>
+    <p>Status: <span id="status-state"></span></p>
+    <p>Total: ₹<span id="status-total"></span></p>
+
+    <button id="back-home">Home</button>
+  </section>
+
+  <!-- ORDER HISTORY -->
+  <section id="order-history-section" class="panel">
+    <h2>Order History</h2>
+    <ul id="order-history-list"></ul>
+    <p id="order-history-empty" style="color:#666">No orders found.</p>
+    <button id="back-to-menu">Back to Menu</button>
+  </section>
+
+  <!-- PROFILE -->
+  <section id="profile-section" class="panel">
+    <h2>User Profile</h2>
+    <p>Email: <span id="profile-email"></span></p>
+    <label>Name</label>
+    <input type="text" id="profile-name" />
+
+    <h3>Saved addresses</h3>
+    <div id="profile-address-list" style="margin-bottom:10px;"></div>
+
+    <h3>Update password</h3>
+    <div class="password-field">
+      <input type="password" id="current-password" placeholder="Current password" />
+      <button type="button" class="eye-btn" data-target="current-password">👁️</button>
+    </div>
+    <div class="password-field">
+      <input type="password" id="new-password" placeholder="New password" />
+      <button type="button" class="eye-btn" data-target="new-password">👁️</button>
+    </div>
+    <div id="password-strength" class="password-strength"></div>
+    <button id="update-password-btn">Update Password</button>
+    <button id="save-profile-btn">Save Profile</button>
+    <button id="back-from-profile">Back to Menu</button>
+    <p id="profile-status" style="color:#d32f2f"></p>
+  </section>
+
+  <!-- ADDRESS --->
+  <section id="address-section" class="panel">
+    <h2>Manage Address</h2>
+    <div id="manage-address-list" style="margin-bottom: 12px;"></div>
+
+    <h3>Add New Address</h3>
+    <input type="text" id="new-address-line1" placeholder="Address" />
+    <input type="text" id="new-address-city" placeholder="City" />
+    <input type="text" id="new-address-state" placeholder="State" />
+    <input type="text" id="new-address-pin" placeholder="PIN Code" />
+    <button id="add-address-btn">Add Address</button>
+    <button id="back-from-address">Back to Menu</button>
+    <p id="address-status" style="color:#d32f2f"></p>
+  </section>
+
+  <div id="loading-spinner" class="spinner" style="display:none;">
+    <div class="spinner-circle"></div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
