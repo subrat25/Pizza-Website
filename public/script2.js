@@ -33,11 +33,8 @@ async function initEncryption() {
     UI_key_PUBLIC = await importPublicKey(keyText);
 
     // Fetch UI key securely (example endpoint)
-    // const keyRes = await fetch(`/api/ui-key`);
-    // UI_key = await keyRes.text();
-     UI_key = "test_ui_key_12345";
-    
-
+    const keyRes = await fetch(`/api/uiKey`);
+    UI_key = await keyRes.text();
     isKeyReady = true;
   } catch (err) {
     console.error("Key load failed:", err);

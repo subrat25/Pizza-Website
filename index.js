@@ -18,7 +18,10 @@ app.get('/api/publicKey', (req, res) => {
   const decodedPublicKey = Buffer.from(publicKey, "base64").toString("utf8");
 res.send(decodedPublicKey);
 });
-
+app.get('/api/uiKey', (req, res) => {
+  const UI_key = process.env.UI_key ;
+    res.send(UI_key);
+});
 app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "public", "index.html"));
 });

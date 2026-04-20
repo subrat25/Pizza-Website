@@ -69,7 +69,7 @@ let stripe;
 let cardElement;
 
 let UI_key_PUBLIC;
-const UI_key = "test_ui_key_12345";
+let UI_key;
 async function importPublicKey(pem) {
   const b64 = pem
     .replace("-----BEGIN PUBLIC KEY-----", "")
@@ -97,6 +97,8 @@ async function initEncryption() {
     );
 
     UI_key_PUBLIC = await importPublicKey(UI_key_raw);
+
+    UI_key = await fetch(`${baseURL}/api/uiKey`).then((res) => res.text());
   } catch (err) {
     console.error("Key load failed:", err);
   }
